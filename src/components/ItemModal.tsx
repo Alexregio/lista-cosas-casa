@@ -34,7 +34,7 @@ export function ItemModal({ isOpen, onClose, item, defaultCategory, onSave }: It
   // Actualizar formData cuando cambian las props
   useEffect(() => {
     if (!isOpen) return;
-    
+
     if (item) {
       setFormData({
         name: item.name,
@@ -54,6 +54,22 @@ export function ItemModal({ isOpen, onClose, item, defaultCategory, onSave }: It
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, item?.id]);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.classList.add("overflow-hidden");
+      document.documentElement.classList.add("overflow-hidden"); // 🔥 extra para mobile
+    } else {
+      document.body.classList.remove("overflow-hidden");
+      document.documentElement.classList.remove("overflow-hidden");
+    }
+
+    return () => {
+      document.body.classList.remove("overflow-hidden");
+      document.documentElement.classList.remove("overflow-hidden");
+    };
+  }, [isOpen]);
+
 
   // Manejar subida de imagen
   const handleImageUpload = (file: File) => {
@@ -80,12 +96,12 @@ export function ItemModal({ isOpen, onClose, item, defaultCategory, onSave }: It
   const isEditing = !!item;
 
   return (
-    <div 
-      className="fixed inset-0 bg-black/60 backdrop-blur-md z-50 flex items-center justify-center p-4 md:p-8"
+    <div
+      className="fixed inset-0 bg-black/60 backdrop-blur-md z-50 flex items-center justify-center p-4 md:p-8 "
       onClick={onClose}
     >
-      <div 
-        className="relative w-full max-w-4xl md:max-h-[90vh] overflow-hidden rounded-3xl"
+      <div
+        className="relative w-full max-w-4xl md:max-h-[90vh] overflow-hidden rounded-3xl overflow-y-scroll"
         onClick={(e) => e.stopPropagation()}
         style={{
           background: "linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.02) 100%)",
@@ -96,14 +112,14 @@ export function ItemModal({ isOpen, onClose, item, defaultCategory, onSave }: It
         }}
       >
         {/* Gradiente decorativo */}
-        <div 
+        <div
           className="absolute inset-0 opacity-30"
           style={{
             background: "radial-gradient(circle at 30% 0%, rgba(99,102,241,0.3) 0%, transparent 50%), radial-gradient(circle at 70% 100%, rgba(168,85,247,0.2) 0%, transparent 50%)",
             pointerEvents: "none",
           }}
         />
-        
+
         {/* Header */}
         <div className="relative z-10 flex items-center justify-between px-6 md:px-8 py-5 border-b border-white/10">
           <h2 className="text-xl md:text-2xl font-bold text-white uppercase">
@@ -147,11 +163,10 @@ export function ItemModal({ isOpen, onClose, item, defaultCategory, onSave }: It
                   <button
                     key={p.value}
                     onClick={() => setFormData({ ...formData, priority: p.value })}
-                    className={`px-4 py-3 rounded-xl text-sm font-medium border transition-all duration-200 ${
-                      formData.priority === p.value
+                    className={`px-4 py-3 rounded-xl text-sm font-medium border transition-all duration-200 ${formData.priority === p.value
                         ? `${p.bg} ${p.color} ${p.border}`
                         : "bg-white/5 border-white/10 text-slate-300 hover:bg-white/10"
-                    }`}
+                      }`}
                   >
                     {p.label.toUpperCase()}
                   </button>
@@ -167,7 +182,7 @@ export function ItemModal({ isOpen, onClose, item, defaultCategory, onSave }: It
                 value={formData.category}
                 onChange={(e) => setFormData({ ...formData, category: e.target.value as Category })}
                 className="w-full bg-slate-800 border border-white/20 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 cursor-pointer"
-                style={{ 
+                style={{
                   backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
                   backgroundRepeat: 'no-repeat',
                   backgroundPosition: 'right 12px center',
@@ -194,11 +209,10 @@ export function ItemModal({ isOpen, onClose, item, defaultCategory, onSave }: It
                   <button
                     key={s.value}
                     onClick={() => setFormData({ ...formData, status: s.value })}
-                    className={`px-4 py-3 rounded-xl text-sm font-medium border transition-all duration-200 ${
-                      formData.status === s.value
+                    className={`px-4 py-3 rounded-xl text-sm font-medium border transition-all duration-200 ${formData.status === s.value
                         ? "bg-blue-500/20 text-blue-400 border-blue-500/50"
                         : "bg-white/5 border-white/10 text-slate-300 hover:bg-white/10"
-                    }`}
+                      }`}
                   >
                     {s.label.toUpperCase()}
                   </button>
