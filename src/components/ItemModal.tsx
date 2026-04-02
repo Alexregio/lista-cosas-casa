@@ -178,23 +178,22 @@ export function ItemModal({ isOpen, onClose, item, defaultCategory, onSave }: It
               <label className="block text-slate-400 text-xs font-medium mb-3 uppercase tracking-wider">
                 Categoría
               </label>
-              <select
-                value={formData.category}
-                onChange={(e) => setFormData({ ...formData, category: e.target.value as Category })}
-                className="w-full bg-slate-800 border border-white/20 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 cursor-pointer"
-                style={{
-                  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
-                  backgroundRepeat: 'no-repeat',
-                  backgroundPosition: 'right 12px center',
-                  backgroundSize: '20px'
-                }}
-              >
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 {CATEGORIES.map(c => (
-                  <option key={c.value} value={c.value}>
-                    {c.icon} {c.label.toUpperCase()}
-                  </option>
+                  <button
+                    key={c.value}
+                    onClick={() => setFormData({ ...formData, category: c.value })}
+                    className={`px-3 py-2.5 rounded-xl text-xs font-medium border transition-all duration-200 flex items-center gap-1.5 ${
+                      formData.category === c.value
+                        ? "bg-blue-500/20 text-blue-400 border-blue-500/50"
+                        : "bg-white/5 border-white/10 text-slate-300 hover:bg-white/10"
+                    }`}
+                  >
+                    <span>{c.icon}</span>
+                    <span>{c.label.toUpperCase()}</span>
+                  </button>
                 ))}
-              </select>
+              </div>
             </div>
           </div>
 
