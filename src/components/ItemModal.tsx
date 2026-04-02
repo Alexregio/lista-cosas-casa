@@ -158,19 +158,23 @@ export function ItemModal({ isOpen, onClose, item, defaultCategory, onSave }: It
               <label className="block text-slate-400 text-xs font-medium mb-3 uppercase tracking-wider">
                 Prioridad
               </label>
-              <div className="grid grid-cols-2 gap-2">
-                {PRIORITIES.map(p => (
-                  <button
-                    key={p.value}
-                    onClick={() => setFormData({ ...formData, priority: p.value })}
-                    className={`px-4 py-3 rounded-xl text-sm font-medium border transition-all duration-200 ${formData.priority === p.value
-                        ? `${p.bg} ${p.color} ${p.border}`
-                        : "bg-white/5 border-white/10 text-slate-300 hover:bg-white/10"
-                      }`}
-                  >
-                    {p.label.toUpperCase()}
-                  </button>
-                ))}
+              <div className="relative">
+                <select
+                  value={formData.priority}
+                  onChange={(e) => setFormData({ ...formData, priority: e.target.value as Priority })}
+                  className="w-full appearance-none bg-slate-800 border border-white/20 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 cursor-pointer text-sm uppercase"
+                >
+                  {PRIORITIES.map(p => (
+                    <option key={p.value} value={p.value} className="bg-slate-800 text-white">
+                      {p.label.toUpperCase()}
+                    </option>
+                  ))}
+                </select>
+                <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
+                  <svg className="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
               </div>
             </div>
 
@@ -178,21 +182,23 @@ export function ItemModal({ isOpen, onClose, item, defaultCategory, onSave }: It
               <label className="block text-slate-400 text-xs font-medium mb-3 uppercase tracking-wider">
                 Categoría
               </label>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                {CATEGORIES.map(c => (
-                  <button
-                    key={c.value}
-                    onClick={() => setFormData({ ...formData, category: c.value })}
-                    className={`px-3 py-2.5 rounded-xl text-xs font-medium border transition-all duration-200 flex items-center gap-1.5 ${
-                      formData.category === c.value
-                        ? "bg-blue-500/20 text-blue-400 border-blue-500/50"
-                        : "bg-white/5 border-white/10 text-slate-300 hover:bg-white/10"
-                    }`}
-                  >
-                    <span>{c.icon}</span>
-                    <span>{c.label.toUpperCase()}</span>
-                  </button>
-                ))}
+              <div className="relative">
+                <select
+                  value={formData.category}
+                  onChange={(e) => setFormData({ ...formData, category: e.target.value as Category })}
+                  className="w-full appearance-none bg-slate-800 border border-white/20 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 cursor-pointer text-sm uppercase"
+                >
+                  {CATEGORIES.map(c => (
+                    <option key={c.value} value={c.value} className="bg-slate-800 text-white">
+                      {c.icon} {c.label.toUpperCase()}
+                    </option>
+                  ))}
+                </select>
+                <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
+                  <svg className="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
               </div>
             </div>
           </div>
@@ -203,19 +209,23 @@ export function ItemModal({ isOpen, onClose, item, defaultCategory, onSave }: It
               <label className="block text-slate-400 text-xs font-medium mb-3 uppercase tracking-wider">
                 Estado
               </label>
-              <div className="grid grid-cols-3 gap-2">
-                {STATUSES.map(s => (
-                  <button
-                    key={s.value}
-                    onClick={() => setFormData({ ...formData, status: s.value })}
-                    className={`px-4 py-3 rounded-xl text-sm font-medium border transition-all duration-200 ${formData.status === s.value
-                        ? "bg-blue-500/20 text-blue-400 border-blue-500/50"
-                        : "bg-white/5 border-white/10 text-slate-300 hover:bg-white/10"
-                      }`}
-                  >
-                    {s.label.toUpperCase()}
-                  </button>
-                ))}
+              <div className="relative">
+                <select
+                  value={formData.status}
+                  onChange={(e) => setFormData({ ...formData, status: e.target.value as Status })}
+                  className="w-full appearance-none bg-slate-800 border border-white/20 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 cursor-pointer text-sm uppercase"
+                >
+                  {STATUSES.map(s => (
+                    <option key={s.value} value={s.value} className="bg-slate-800 text-white">
+                      {s.label.toUpperCase()}
+                    </option>
+                  ))}
+                </select>
+                <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
+                  <svg className="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
               </div>
             </div>
           )}
