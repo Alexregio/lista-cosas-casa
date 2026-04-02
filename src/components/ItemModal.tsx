@@ -55,20 +55,7 @@ export function ItemModal({ isOpen, onClose, item, defaultCategory, onSave }: It
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, item?.id]);
 
-  useEffect(() => {
-    if (isOpen) {
-      document.body.classList.add("overflow-hidden");
-      document.documentElement.classList.add("overflow-hidden"); // 🔥 extra para mobile
-    } else {
-      document.body.classList.remove("overflow-hidden");
-      document.documentElement.classList.remove("overflow-hidden");
-    }
-
-    return () => {
-      document.body.classList.remove("overflow-hidden");
-      document.documentElement.classList.remove("overflow-hidden");
-    };
-  }, [isOpen]);
+  // Sin overflow-hidden para permitir scroll en móvil
 
 
   // Manejar subida de imagen
@@ -101,7 +88,7 @@ export function ItemModal({ isOpen, onClose, item, defaultCategory, onSave }: It
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-4xl md:max-h-[90vh] overflow-hidden rounded-3xl overflow-y-scroll"
+        className="relative w-full max-w-4xl max-h-[90vh] rounded-3xl overflow-y-auto overscroll-contain"
         onClick={(e) => e.stopPropagation()}
         style={{
           background: "linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.02) 100%)",
